@@ -1,0 +1,11 @@
+[package]
+name = "rust-bindgen-webapp"
+description = "Generate Rust bindings with rust-bindgen as a webapp"
+license = "BSD-3-Clause"
+version = "0.1.0"
+authors = ["Ted Mielczarek <ted@mielczarek.org>"]
+
+[dependencies]
+bindgen = "0.26.3"
+rocket = "0.3.0"
+rocket_codegen = "0.3.0"
