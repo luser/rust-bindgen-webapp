@@ -3,11 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>rust-bindgen</title>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <h1>rust-bindgen</h1>
     <form id='source'>
       <textarea name="source" autofocus=true rows=20 cols=100></textarea>
+      <select name="lang">
+          <option value="c">C</option>
+          <option value="c++">C++</option>
+          <option value="objc">Objective C</option>
+      </select>
       <input type="submit" value="Generate Rust Bindings">
     </form>
     <h2>Generated Bindings:</h2>

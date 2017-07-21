@@ -22,13 +22,20 @@ fn static_files(file: PathBuf) -> Option<NamedFile> {
 #[derive(FromForm)]
 struct BindgenInput {
     source: String,
+    lang: Option<String>,
 }
 
 #[post("/bindgen", data = "<input>")]
 fn api_bindgen(input: Form<BindgenInput>) -> Result<String, String> {
     let i = input.get();
-    builder().header_contents("input.h", &i.source)
-        .generate()
+    let mut bindings = builder().header_contents("input.h", &i.source);
+
+    if let Some(ref lang) = i.lang {
+        bindings = bindings.clang_arg("-x");
+        bindings = bindings.clang_arg(lang.clone());
+    }
+
+    bindings.generate()
         .map(|b| b.to_string())
         //TODO: get error messages out of bindgen?
         .or(Err("Failed to generate bindings".to_owned()))
