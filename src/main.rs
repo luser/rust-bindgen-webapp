@@ -28,7 +28,7 @@ struct BindgenInput {
 fn api_bindgen(input: Form<BindgenInput>) -> Result<String, String> {
     let i = input.get();
     builder().header_contents("input.h", &i.source)
-         .generate()
+        .generate()
         .map(|b| b.to_string())
         //TODO: get error messages out of bindgen?
         .or(Err("Failed to generate bindings".to_owned()))
