@@ -1,3 +1,4 @@
+/*global URLSearchParams, FormData, Request fetch */
 const form = document.getElementById('source');
 const code = document.getElementById('bindings');
 
@@ -27,7 +28,8 @@ form.addEventListener("submit", ev => {
     return response.text();
   }).then((bindings) => {
     code.innerText = bindings;
+    code.style.display = 'block';
   }).catch((error) => {
     code.innerText = error;
-  })
+  });
 });

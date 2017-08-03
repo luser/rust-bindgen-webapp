@@ -1,3 +1,7 @@
 form > * {
     display: block;
 }
+
+#bindings {
+    border: 1px solid black;
+}
