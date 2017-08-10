@@ -1,29 +1,28 @@
-/*global URLSearchParams, FormData, Request fetch */
+/*global Request fetch */
 const form = document.getElementById('source');
+const inputSource = document.getElementById('input');
+const language = document.getElementById('lang');
 const code = document.getElementById('bindings');
 
-form.addEventListener("submit", ev => {
+form.addEventListener('submit', ev => {
   ev.preventDefault();
 
-  const body = new URLSearchParams();
-  const formData = new FormData(form);
-
-  // Rocket does not support multipart/form-data, this is a hack to use
-  // application/x-www-form-urlencoded
-  for (const [k, v] of formData.entries()) {
-    if (typeof k == 'string') {
-      body.append(k, v);
-    }
-  }
+  const body = {
+    source: inputSource.value,
+    lang: language.options[language.selectedIndex].value
+  };
 
   const request = new Request('/api/bindgen', {
     method: 'POST',
-    body: body
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
   });
 
   fetch(request).then((response) => {
     if (!response.ok) {
-      throw Error("Failed to generate bindings.");
+      throw Error('Failed to generate bindings.');
     }
     return response.text();
   }).then((bindings) => {

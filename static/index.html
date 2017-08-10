@@ -9,12 +9,12 @@
   <body>
     <h1>rust-bindgen</h1>
     <p>Generate Rust bindings for C source using <a href="https://github.com/rust-lang-nursery/rust-bindgen">rust-bindgen</a>. Paste some C header definitions in the text area below!
-    <form id='source'>
+    <form id="source">
       <label for="source">C source:<br>
-        <textarea name="source" autofocus=true rows=20 cols=100></textarea>
+        <textarea id="input" name="source" autofocus=true rows=20 cols=100></textarea>
       </label>
       <label>C dialect:
-        <select name="lang">
+        <select name="lang" id="lang">
           <option value="c">C</option>
           <option value="c++">C++</option>
           <option value="objc">Objective C</option>
@@ -24,7 +24,7 @@
     </form>
     <h2>Generated Bindings:</h2>
     <code>
-      <pre id='bindings' style='display: none;'>
+      <pre id="bindings" style="display: none;">
       </pre>
     </code>
     <a class="github-fork-ribbon" href="https://github.com/luser/rust-bindgen-webapp" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>

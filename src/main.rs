@@ -3,10 +3,16 @@
 
 extern crate bindgen;
 extern crate rocket;
+extern crate rocket_contrib;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+extern crate serde_json;
 
 use bindgen::builder;
 use rocket::request::Form;
 use rocket::response::NamedFile;
+use rocket_contrib::Json;
 use std::path::{Path, PathBuf};
 
 #[get("/")]
@@ -19,18 +25,17 @@ fn static_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/").join(file)).ok()
 }
 
-#[derive(FromForm)]
+#[derive(Deserialize)]
 struct BindgenInput {
     source: String,
     lang: Option<String>,
 }
 
 #[post("/bindgen", data = "<input>")]
-fn api_bindgen(input: Form<BindgenInput>) -> Result<String, String> {
-    let i = input.get();
-    let mut bindings = builder().header_contents("input.h", &i.source);
+fn api_bindgen(input: Json<BindgenInput>) -> Result<String, String> {
+    let mut bindings = builder().header_contents("input.h", &input.source);
 
-    if let Some(ref lang) = i.lang {
+    if let Some(ref lang) = input.lang {
         bindings = bindings.clang_arg("-x");
         bindings = bindings.clang_arg(lang.clone());
     }
